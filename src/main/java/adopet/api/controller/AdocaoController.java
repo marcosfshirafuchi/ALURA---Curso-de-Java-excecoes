@@ -39,30 +39,25 @@ public class AdocaoController {
     @PostMapping
     @Transactional
     public ResponseEntity<String> solicitar(@RequestBody @Valid SolicitacaoDeAdocaoDTO dados){
-        try{
-            this.service.solicitar(dados);
-        }catch (AdocaoException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }
-
+        this.service.solicitar(dados);
         return ResponseEntity.ok("Adoção solicitada com sucesso!");
     }
 
     @PutMapping("/aprovar")
     @Transactional
     public ResponseEntity<String> aprovar(@RequestBody @Valid AprovarAdocaoDTO dto){
-        try {
+
             this.service.aprovar(dto);
-        }catch (EntityNotFoundException ex){
+
             //Retorna o status 404 e mostra a mensagem no Postman
             //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Adoção não encontrada");
 
             //Mensagem padrão
-           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+           //return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 
             //Outra forma de enviar a mensagem no postman
             //return new ResponseEntity<>("Adoção não encontrada: " + ex.getMessage(), HttpStatus.NOT_FOUND);
-        }
+
         return ResponseEntity.ok().build();
     }
 
